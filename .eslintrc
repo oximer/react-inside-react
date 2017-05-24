@@ -1,0 +1,14 @@
+{
+    "extends": "rallycoding",
+    "rules": {
+        "max-len": [
+            2,
+            250
+        ],
+        "no-underscore-dangle": 0,
+        "react/sort-comp": 0,
+    },
+    "env": {
+        "jest": true
+    }
+}
