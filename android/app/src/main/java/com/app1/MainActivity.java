@@ -2,7 +2,6 @@ package com.app1;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -14,6 +13,9 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
+
+    private ReactInstanceManager appReactInstanceManager;
+    private ReactInstanceManager appReactInstanceManager2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setBundleAssetName("app1.jsbundle")
                 .setJSMainModuleName("app1")
                 .setUseDeveloperSupport(false);
-        ReactInstanceManager appReactInstanceManager = builder.build();
+        appReactInstanceManager = builder.build();
 
         app1RootView.startReactApplication(appReactInstanceManager, "app1", null);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.app1);
@@ -46,7 +48,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setBundleAssetName("app2.jsbundle")
                 .setJSMainModuleName("app2")
                 .setUseDeveloperSupport(false);
-        ReactInstanceManager appReactInstanceManager2 = builder.build();
+        appReactInstanceManager2 = builder.build();
 
         app2RootView.startReactApplication(appReactInstanceManager2, "app2", null);
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.app2);
@@ -57,4 +59,26 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     public void invokeDefaultOnBackPressed() {
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        appReactInstanceManager.onHostResume(this,this);
+        appReactInstanceManager2.onHostResume(this,this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        appReactInstanceManager.onHostPause();
+        appReactInstanceManager2.onHostPause();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        appReactInstanceManager.onHostDestroy();
+        appReactInstanceManager2.onHostDestroy();
+    }
+
 }

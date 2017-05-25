@@ -5,15 +5,33 @@
  */
 
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight
+} from 'react-native';
 
 export default class app2 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { counter: 0 };
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           App2
         </Text>
+        <TouchableHighlight
+          onPress={() => {
+            this.setState({ counter: this.state.counter + 1 });
+          }}
+        >
+          <Text style={{ color: 'black' }}>Press me: {this.state.counter}</Text>
+        </TouchableHighlight>
       </View>
     );
   }
